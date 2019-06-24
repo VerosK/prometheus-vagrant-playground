@@ -12,4 +12,4 @@ check: http://localhost:9090/ to see the Prometheus itself
 
 ## Disclaimer
 
-This is internal host 
+This is internal testing host. Use as you need.
