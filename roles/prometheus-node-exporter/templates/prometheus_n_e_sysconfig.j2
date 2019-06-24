@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+LISTEN_ON="{{ prometheus_n_e_listen }}"
+{% if prometheus_n_e_collectors %}
+# use only selected collectors
+COLLECTORS="--collectors.enabled {{ prometheus_n_e_collectors }}"
+{% else %}
+# use default collectors
+COLLECTORS=""
+{% endif %}
+EXTRA_ARGS="$COLLECTORS {{ prometheus_n_e_extra_args }}"

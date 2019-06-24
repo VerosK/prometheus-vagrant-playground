@@ -1,0 +1,25 @@
+prometheus_yumrepo_manage: false
+prometheus_yumrepo_file: /etc/yum.repos.d/prometheus.repo
+prometheus_yumrepo_content: |
+  [prometheus]
+  name=prometheus
+  baseurl=https://centos.toaster.cz/$releasever/prometheus
+  repo_gpgcheck=0
+  enabled=1
+  gpgcheck=0
+  sslverify=1
+
+prometheus_package_name: prometheus2
+prometheus_sysconfig: /etc/sysconfig/prometheus
+
+prometheus_config: /etc/prometheus/prometheus.yml
+prometheus_service_name: prometheus
+prometheus_state: started
+prometheus_enable: true
+prometheus_data_path: /var/lib/prometheus/data
+prometheus_args: |
+    --config.file={{ prometheus_config }} --storage.tsdb.path={{ prometheus_data_path }}
+
+prometheus_dropin_dir: /etc/prometheus/files/
+
+prometheus_node_exporters_group: all

@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+# created node_exporter.yml.j2
+---
+{% for host in groups[prometheus_node_exporters_group]  %}
+- targets:  # {{ host }}
+     - '{{ hostvars[host].ansible_default_ipv4.address }}:9100'
+  labels:
+      role: '{{ hostvars[host].prometheus_node_role|default('generic') }}'
+      instance: '{{ host }}'
+      job: node
+{% endfor %}

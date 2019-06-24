@@ -1,0 +1,19 @@
+prometheus_n_e_yumrepo_manage: false
+prometheus_n_e_yumrepo_file: /etc/yum.repos.d/prometheus.repo
+prometheus_n_e_yumrepo_content: |
+  [prometheus]
+  name=prometheus
+  baseurl=https://centos.toaster.cz/$releasever/prometheus
+  repo_gpgcheck=0
+  enabled=1
+  gpgcheck=0
+  sslverify=1
+
+
+prometheus_n_e_sysconfig: /etc/sysconfig/node-exporter
+prometheus_n_e_listen: "127.0.0.1:9100"
+prometheus_n_e_service_name: prometheus-node-exporter
+prometheus_n_e_state: started
+prometheus_n_e_enable: true
+prometheus_n_e_collectors: conntrack,diskstats,entropy,filefd,filesystem,loadavg,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat
+prometheus_n_e_extra_args: ""

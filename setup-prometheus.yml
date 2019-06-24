@@ -1,0 +1,7 @@
+
+- name: Add prometheus
+  hosts: all
+  tags: prometheus
+  roles:
+  - role: prometheus
+  - role: prometheus-node-exporter

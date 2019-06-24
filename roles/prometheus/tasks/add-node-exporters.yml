@@ -1,0 +1,6 @@
+
+- name: Create generic node-exporter.yml
+  template:
+      src: node_exporters.yml.j2
+      dest: '{{ prometheus_dropin_dir }}/node_exporters.yml'
+      owner: prometheus

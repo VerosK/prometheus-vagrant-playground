@@ -1,0 +1,4 @@
+- name: Restart Prometheus node exporter
+  service:
+    name: "{{ prometheus_n_e_service_name }}"
+    state: restarted

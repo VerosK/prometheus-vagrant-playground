@@ -1,0 +1,41 @@
+- name: Add prometheus yum repo when required
+  copy:
+      dest: '{{ prometheus_yumrepo_file }}'
+      content: '{{ prometheus_yumrepo_content }}'
+  when: prometheus_yumrepo_manage
+
+- name: Install prometheus
+  yum:
+    name: '{{ prometheus_package_name }}'
+    state: installed
+    enablerepo: prometheus
+
+- name: Setup sysconfig
+  template:
+    src: prometheus_sysconfig.j2
+    dest: '{{ prometheus_sysconfig }}'
+    backup: yes
+  notify: Restart Prometheus
+
+- name: Create drop-in directory for Prometheus configs
+  file:
+    dest: '{{ prometheus_dropin_dir }}'
+    state: directory
+    owner: prometheus
+
+- name: Deploy prometheus config
+  template:
+    src: prometheus.yml.j2
+    dest: '{{ prometheus_config }}'
+    backup: yes
+    owner: prometheus
+
+- name: Start service when requested
+  service:
+    name: "{{ prometheus_service_name }}"
+    state: '{{ prometheus_state }}'
+    enabled: "{{ prometheus_enable }}"
+
+- name: "Add all hosts node exporters to Prometheus"
+  include: add-node-exporters.yml
+  tags: prometheus-nodes

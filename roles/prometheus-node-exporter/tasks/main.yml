@@ -1,0 +1,23 @@
+- name: Add prometheus yum repo when required
+  copy:
+      dest: '{{ prometheus_n_e_yumrepo_file }}'
+      content: '{{ prometheus_n_e_yumrepo_content }}'
+  when: prometheus_n_e_yumrepo_manage
+
+- name: Install prometheus node exporter
+  yum:
+    name: prometheus-node-exporter
+    state: installed
+    enablerepo: prometheus
+
+- name: Setup sysconfig
+  template:
+    src: prometheus_n_e_sysconfig.j2
+    dest: '{{ prometheus_n_e_sysconfig }}'
+  notify: Restart Prometheus node exporter
+
+- name: Start service when requested
+  service:
+    name: "{{ prometheus_n_e_service_name }}"
+    state: '{{ prometheus_n_e_state }}'
+    enabled: "{{ prometheus_n_e_enable }}"
